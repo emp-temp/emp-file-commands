@@ -1,0 +1,13 @@
+Usage: 
+    ./main [option] [Arguments per option]
+
+Options:
+    [-h]                                     Print this
+    [-w]  [filename] [line_word]             Create filenwith overwrite
+    [-wm] [filename] [line_num]              (multiple lines of w)
+    [-i]  [filename] [line_num]              Append line to file
+    [-r]  [filename] [line_num]              Replace line in file
+    [-c]  [filename] {start_num} {end_num}   View file(like cat command)
+    [-e]  [filename]                         Encode file to string
+    [-s]  [filename] [search_word]           Find lines with word in file
+    [-d]  [filename] [line_num]              Deleate line in file 
