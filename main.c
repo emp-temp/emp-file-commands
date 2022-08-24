@@ -9,10 +9,11 @@ void print_usage();
 void print_error(char *text);
 void encoding(char *filename);
 void replacement(char *filename, int change_line_num);
-void deleate(char *filename, int deleate_line_num);
+void deleate(char *filename, int delate_line_num);
 void insert(char *filename, int insert_num);
 void search(char *filename, char *search_word);
 void write(char *file, char *write_word, char *option);
+void dictionary(char *word);
 int get_file_line(char *filename);
 int is_included(int start_num, int end_num, int limit_num);
 int is_greater(int start_num, int end_num);
@@ -24,7 +25,7 @@ size_t split(char *s, const char *separator, char **result, size_t result_size);
 
 int main(int argc, char *argv[]) {
   char option = ' ';
-  for (int i = 0; i < argc; i++) {
+  for (int i = 1; i < argc; i++) {
     if (*argv[i] == '-') {
       option = *(argv[i] + 1);
       switch (option) {
@@ -96,6 +97,14 @@ int main(int argc, char *argv[]) {
         break;
       }
     }
+    if ((strcmp(argv[i], "dic") == 0) && i == 1) {
+      if (argc != 3) {
+        printf("argc: %d\n", argc);
+        print_usage();
+        print_error("\n\nNOT ENOUGH ARGUMENTS");
+      }
+      dictionary(argv[argc - 1]);
+    } 
   }
   return 0;
 }
@@ -199,7 +208,7 @@ int is_included(int start_num, int end_num, int limit_num) {
 void print_usage() {
   FILE *fp;
   char str[N];
-  fp = fopen("usage.txt", "r");
+  fp = fopen("/Users/empty/my_commands/ecm/usage.txt", "r");
   if (fp == NULL) {
     print_error("usage.txt file not open!");
   }
@@ -282,7 +291,7 @@ void replacement(char *filename, int change_line_num) {
   fclose(fp);
 }
 
-void deleate(char *filename, int deleate_line_num) {
+void deleate(char *filename, int delate_line_num) {
   FILE *fp;
   char str[N][10000];
   char change_word[10000];
@@ -301,7 +310,7 @@ void deleate(char *filename, int deleate_line_num) {
     line_num++;
   }
 
-  for (int i = deleate_line_num - 1; i < line_num; i++) {
+  for (int i = delate_line_num - 1; i < line_num; i++) {
     strcpy(str[i], str[i + 1]);
   }
 
@@ -456,4 +465,34 @@ void write(char *filename, char *write_word, char *option) {
   }
 
   fclose(fp);
+}
+
+void dictionary(char *word) {
+  FILE *fp;
+  char fname[] = "/Users/empty/my_commands/ecm/ejdict-hand-utf8.txt";
+  char str[N];
+  char *result[8];
+  size_t result_size;
+  char *line;
+
+  fp = fopen(fname, "r");
+  if (fp == NULL) {
+    print_error("dictionary file not cat't opened");
+  }
+  while (fgets(str, N, fp) != NULL) {
+    line = strstr(str, word);
+    if (line == NULL) {
+      continue;
+    }
+    result_size = split(str, "	", result, SIZE_OF_ARRAY(result));
+    for (size_t i = 0; i < result_size; ++i) {
+      if (strcmp(word, result[i]) != 0) {
+        continue;
+      }
+      printf("%s    %s\n", result[0], result[1]);
+    }
+  }
+
+  fclose(fp);
+
 }
