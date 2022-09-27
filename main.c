@@ -115,7 +115,6 @@ void cat(char *filename, int start_num, int end_num) {
   int line_num = 1;
   int limit_num = get_file_line(filename);
   int chr;
-
   fp = fopen(filename, "r");
 
   if (fp == NULL) {
@@ -173,11 +172,10 @@ int get_file_line(char *filename) {
   FILE *fp;
   char buf[N];
   int line = 0;
-
+  char *text;
   fp = fopen(filename, "r");
 
   if (fp == NULL) {
-    char *text;
     sprintf(text, "%s file not open!\n", filename);
     print_error(text);
   }
@@ -208,7 +206,7 @@ int is_included(int start_num, int end_num, int limit_num) {
 void print_usage() {
   FILE *fp;
   char str[N];
-  fp = fopen("/Users/empty/my_commands/ecm/usage.txt", "r");
+  fp = fopen("usage.txt", "r");
   if (fp == NULL) {
     print_error("usage.txt file not open!");
   }
@@ -227,11 +225,10 @@ void print_error(char *text) {
 void encoding(char *filename) {
   FILE *fp;
   int chr;
-
+  char *text;
   fp = fopen(filename, "r");
 
   if (fp == NULL) {
-    char *text;
     sprintf(text, "%s file not open!", filename);
     print_error(text);
   }
@@ -251,8 +248,8 @@ void encoding(char *filename) {
 
 void replacement(char *filename, int change_line_num) {
   FILE *fp;
-  char str[N][10000];
-  char change_word[10000];
+  char str[N][100];
+  char change_word[100];
   int line_num = 0;
 
   fp = fopen(filename, "r");
@@ -293,8 +290,8 @@ void replacement(char *filename, int change_line_num) {
 
 void deleate(char *filename, int delate_line_num) {
   FILE *fp;
-  char str[N][10000];
-  char change_word[10000];
+  char str[N][1000];
+  char change_word[1000];
   int line_num = 0;
 
   fp = fopen(filename, "r");
@@ -334,14 +331,13 @@ void deleate(char *filename, int delate_line_num) {
 }
 
 void insert(char *filename, int insert_num) {
-
   if (insert_num < 0) {
     print_error("ILLEGAL VALUE");
   }
 
   FILE *fp;
-  char str[N][10000];
-  char insert_word[10000];
+  char str[N][1000];
+  char insert_word[1000];
   int line_num = 0;
 
   fp = fopen(filename, "r");
@@ -409,9 +405,9 @@ size_t split(char *s, const char *separator, char **result,
 void search(char *filename, char *search_word) {
 
   FILE *fp;
-  char str[N][10000];
+  char str[N][1000];
   int line_num = 0;
-  char *result[10000];
+  char *result[1000];
   size_t result_size;
 
   fp = fopen(filename, "r");
@@ -436,7 +432,7 @@ void search(char *filename, char *search_word) {
 
 void write(char *filename, char *write_word, char *option) {
 
-  char str[N][10000];
+  char str[N][1000];
   int num_of_line;
 
   if (strcmp(option, "-wm") == 0) {
@@ -469,7 +465,7 @@ void write(char *filename, char *write_word, char *option) {
 
 void dictionary(char *word) {
   FILE *fp;
-  char fname[] = "/Users/empty/my_commands/ecm/ejdict-hand-utf8.txt";
+  char fname[] = "ejdict-hand-utf8.txt";
   char str[N];
   char *result[8];
   size_t result_size;
